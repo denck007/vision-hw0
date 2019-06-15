@@ -23,6 +23,12 @@ save_image(im, "overflow")
 clamp_image(im)
 save_image(im, "doglight_fixed")
 
+im = load_image("data/dog.jpg")
+rgb_to_hsv(im)
+save_image(im, "dog_hsv_result.jpg")
+hsv_to_rgb(im)
+save_image(im, "dog_hsv2rgb_result.jpg")
+
 # 6-7. Colorspace and saturation
 im = load_image("data/dog.jpg")
 rgb_to_hsv(im)

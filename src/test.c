@@ -76,6 +76,14 @@ void test_rgb_to_hsv()
     image im = load_image("data/dog.jpg");
     rgb_to_hsv(im);
     image hsv = load_image("figs/dog.hsv.png");
+
+    for(int ii=0;ii<im.c*im.w*im.h;++ii){
+        if(within_eps(im.data[ii],hsv.data[ii])){
+        }else{
+            printf("error at %d: %.6f %.6f delta %.16f\n",ii,im.data[ii],hsv.data[ii],im.data[ii]-hsv.data[ii]);
+        }
+
+    }
     TEST(same_image(im, hsv));
 }
 
