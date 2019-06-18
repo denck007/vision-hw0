@@ -71,6 +71,17 @@ void shift_image(image im, int c, float v)
     }
 }
 
+void scale_image(image im, int c, float v)
+{
+    int ii,jj;
+    for(jj=0; jj<im.h; ++jj){
+        for(ii=0;ii<im.w;++ii){
+            int idx = c*im.w*im.h + jj*im.w + ii;
+            im.data[idx] = im.data[idx]*v;
+        }
+    }
+}
+
 void clamp_image(image im)
 {
     for(int idx=0; idx<im.w*im.h*im.c; ++idx){

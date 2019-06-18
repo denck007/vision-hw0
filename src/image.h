@@ -15,6 +15,7 @@ image rgb_to_grayscale(image im);
 void rgb_to_hsv(image im);
 void hsv_to_rgb(image im);
 void shift_image(image im, int c, float v);
+void scale_image(image im, int c, float v);
 void clamp_image(image im);
 
 
