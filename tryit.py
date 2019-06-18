@@ -32,9 +32,14 @@ save_image(im, "dog_hsv2rgb_result.jpg")
 # 6-7. Colorspace and saturation
 im = load_image("data/dog.jpg")
 rgb_to_hsv(im)
-shift_image(im, 1, .2)
+shift_image(im, 1, .15)
 clamp_image(im)
 hsv_to_rgb(im)
 save_image(im, "dog_saturated")
 
+
+im = load_image("data/dog.jpg")
+rgb_to_hsv(im)
+hsv_to_rgb(im)
+save_image(im,"dog_rgb-hsv-rgb.jpg")
 
