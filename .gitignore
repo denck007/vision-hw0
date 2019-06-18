@@ -6,6 +6,8 @@
 .fuse*
 libuwimg*
 uwimg
+*.bin
+*.ipch
 
 # OS Generated #
 .DS_Store*
