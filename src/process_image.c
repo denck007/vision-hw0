@@ -2,6 +2,7 @@
 #include <string.h>
 #include <assert.h>
 #include <math.h>
+#include <stdlib.h>
 #include "image.h"
 
 float get_pixel(image im, int x, int y, int c)
@@ -134,9 +135,11 @@ void rgb_to_hsv(image im)
 
 void hsv_to_rgb(image im)
 {
+    ///https://www.rapidtables.com/convert/color/hsv-to-rgb.html
     int img_size = im.w*im.h;
 
-    float H,S,V,C;
+    float H,S,V,C,m,X;
+    //int H,X;
     float R,G,B;
     for(int jj=0; jj<im.h; ++jj){
         for(int ii=0; ii<im.w; ++ii){
@@ -144,54 +147,48 @@ void hsv_to_rgb(image im)
             int s_idx =    img_size + jj*im.w + ii;
             int v_idx =  2*img_size + jj*im.w + ii;
 
-            H = im.data[h_idx] * 6.0;
+            H = im.data[h_idx] * 360;
             S = im.data[s_idx];
             V = im.data[v_idx];
 
             C = S*V;
+            m = V - C;
+            X = C*(1-fabs(fmod((H/60),2)-1));
 
-            if(H > 5){
-                // B is max, G is min
-                B = V;
-                G = B - C;
-                R = (H-4)/(S*V)+G;
-            } else if (H > 4)
-            { 
-                // B is max, R is min
-                B = V;
-                R = B - C;
-                G = (H-4)/(S*V)+R;
-
-            }else if (H>3)
+            if(H<60){
+                R=C;
+                G=X;
+                B=0;
+            }else if (H<120)  
             {
-                // G is max, R is min
-                G = V;
-                R = G - V;
-                B = (H-2)/(S*V)+R;
-            }else if (H>2)
+                R=X;
+                G=C;
+                B=0;
+            }else if (H<180)  
             {
-                // G is max, B is min
-                G = V;
-                B = G - V;
-                R = (H-2)/(S*V)+B;
-
-            }else if (H>1)
+                R=0;
+                G=C;
+                B=X;
+            }else if (H<240)  
             {
-                // R is max, B is min
-                R = V;
-                B = R - V;
-                G = (H)/(S*V)+B;
+                R=0;
+                G=X;
+                B=C;
+            }else if (H<300)  
+            {
+                R=X;
+                G=0;
+                B=C;
             }else
             {
-                // R is max, G is min
-                R = V;
-                G = R - V;
-                B = (H)/(S*V)+G;
+                R=C;
+                G=0;
+                B=X;
             }
             
-            im.data[h_idx] = R;
-            im.data[s_idx] = G;
-            im.data[v_idx] = B;
+            im.data[h_idx] = R+m;
+            im.data[s_idx] = G+m;
+            im.data[v_idx] = B+m;
         }
     }
 }
